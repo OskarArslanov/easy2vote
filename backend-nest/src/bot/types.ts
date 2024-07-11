@@ -1,16 +1,15 @@
 import TelegramBot from 'node-telegram-bot-api';
-import { GameEnum, ServerEnum } from './handlers/callbacks/enums';
 
 export type CommandValue = {
-  response: string;
+  text: string;
   options?: TelegramBot.SendMessageOptions;
 };
 
 export type GameType = {
-  name: GameEnum;
+  name: string;
   mmotopUrl: string;
   icon?: string;
-  servers: Record<ServerEnum, ServerType>;
+  servers: ServerType[];
 };
 
 export type ServerType = {
@@ -19,4 +18,5 @@ export type ServerType = {
   voteUrl: string;
   votes: number;
   rating: number;
+  name: string;
 };

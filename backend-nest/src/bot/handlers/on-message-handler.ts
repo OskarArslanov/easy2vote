@@ -1,8 +1,6 @@
 import TelegramBot from 'node-telegram-bot-api';
-import { CommandValue } from '../../types';
-import { CommandEnum } from './enums';
-import { gamesData } from '../callbacks/consts';
-import { defaultCommandValue } from './consts';
+import { CommandValue } from '../types';
+import { CommandEnum, defaultCommandValue } from '../commands';
 
 const getMessageResponse = (msg: TelegramBot.Message) => {
   const message = msg.text;
@@ -10,15 +8,15 @@ const getMessageResponse = (msg: TelegramBot.Message) => {
 
   const commands: Record<CommandEnum, CommandValue> = {
     [CommandEnum.Start]: {
-      response: `Welcome to the bot, ${username}! Here you able to automate MMOTOP votes`,
+      text: `Welcome to the bot, ${username}! Here you able to automate MMOTOP votes`,
       options: {
         reply_markup: {
-          inline_keyboard: [Object.keys(gamesData).map((key) => ({ text: key, callback_data: key }))],
+          inline_keyboard: [[{ text: 'Start', callback_data: 'start' }]],
         },
       },
     },
     [CommandEnum.Help]: {
-      response: 'Help message',
+      text: 'Help message',
     },
   };
 
@@ -27,6 +25,6 @@ const getMessageResponse = (msg: TelegramBot.Message) => {
 
 export const onMessageHandler = (bot: TelegramBot, msg: TelegramBot.Message) => {
   const chatId = msg.chat.id;
-  const { response, options } = getMessageResponse(msg);
-  bot.sendMessage(chatId, response, options);
+  const { text, options } = getMessageResponse(msg);
+  bot.sendMessage(chatId, text, options);
 };
