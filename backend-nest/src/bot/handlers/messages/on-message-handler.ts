@@ -1,7 +1,8 @@
 import TelegramBot from 'node-telegram-bot-api';
-import { defaultCommandValue, gamesData } from '../consts';
-import { CommandEnum } from '../enums';
-import { CommandValue } from '../types';
+import { CommandValue } from '../../types';
+import { CommandEnum } from './enums';
+import { gamesData } from '../callbacks/consts';
+import { defaultCommandValue } from './consts';
 
 const getMessageResponse = (msg: TelegramBot.Message) => {
   const message = msg.text;
@@ -26,7 +27,6 @@ const getMessageResponse = (msg: TelegramBot.Message) => {
 
 export const onMessageHandler = (bot: TelegramBot, msg: TelegramBot.Message) => {
   const chatId = msg.chat.id;
-  console.log(chatId);
   const { response, options } = getMessageResponse(msg);
   bot.sendMessage(chatId, response, options);
 };
